@@ -1,6 +1,6 @@
 import random
 import pygame, sys
-from button import Button
+from botones import Button
 
 pygame.init()
 
@@ -27,17 +27,25 @@ def play():
   
 
     
+    
  black = 0, 0, 0
  white = 255, 255, 255
  green = 0, 255, 0
  red = 255, 0, 0
+ 
+ def contador(surface, text, size, x, y):
+   font = pygame.font.Font("assets/font.ttf", size)
+   text_surface = font.render(text, True, (255, 255, 255))
+   text_rect = text_surface.get_rect()
+   text_rect.midtop = (x, y)
+   surface.blit(text_surface, text_rect)
     
     # CReacion de las clases
    
  class Jugador(pygame.sprite.Sprite):
         
         def __init__(self):
-            self.image = pygame.image.load("jugador.png").convert_alpha()
+            self.image = pygame.image.load("assets/jugador.png").convert_alpha()
             self.rect = self.image.get_rect()
             
   
@@ -45,7 +53,7 @@ def play():
         
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
-            self.image = pygame.image.load("tejo.png").convert_alpha()
+            self.image = pygame.image.load("assets/tejo.png").convert_alpha()
             self.rect = self.image.get_rect()
     
     
@@ -53,7 +61,7 @@ def play():
             
         def __init__(self):
           pygame.sprite.Sprite.__init__(self)
-          self.image = pygame.image.load("mecha.png").convert_alpha()
+          self.image = pygame.image.load("assets/mecha.png").convert_alpha()
           self.rect = self.image.get_rect()
             
                 
@@ -66,7 +74,7 @@ def play():
  clock = pygame.time.Clock()
  pygame.mouse.set_visible(True)
  pygame.display.set_caption("Tejo")   
- fondo = pygame.image.load("imagen_principal.jpg").convert()    
+ fondo = pygame.image.load("assets/imagen_principal.jpg").convert()    
     
  jugador = Jugador()
     
@@ -101,7 +109,7 @@ def play():
  speed_x = 3
  speed_y = 3
 
- contador = 0
+ score = 0
  font = pygame.font.SysFont("Arial", 20)
 
  while True:
@@ -143,12 +151,8 @@ def play():
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, mechaLista, True):
-            contador += 1
-            print(contador)
-        if contador == 5:
-            print("Ganaste")
-            sys.exit()    
-        
+            score += 1
+            print(score)
            
     cord_x += speed_x
     if cord_x > 770 or cord_x < 0:
@@ -159,7 +163,9 @@ def play():
     mechaLista.draw(ventana)
     tejo_lista.draw(ventana)
     ventana.blit(jugador.image, (cord_x, cord_y))
-    
+    pygame.draw.rect(ventana, (0, 0, 0), (0, 0, 370, 70))
+    contador(ventana, str("Tu puntaje es: "), 16, 900 - 750, 10)
+    contador(ventana, str(score), 15, 900 - 600, 10)
     clock.tick(600)    
     pygame.display.flip()
     
