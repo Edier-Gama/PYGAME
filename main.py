@@ -4,26 +4,26 @@ from button import Button
 
 pygame.init()
 
-pygame.mixer.init()
-pygame.mixer.music.load("menu.mp3")
-pygame.mixer.music.play()
-pygame.mixer.music.set_volume(0.5)
+# pygame.mixer.init()
+# pygame.mixer.music.load("menu.mp3")
+# pygame.mixer.music.play()
+# pygame.mixer.music.set_volume(0.5)
   
 
 SCREEN = pygame.display.set_mode((900, 700))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("assets/Background.png")
+BG = pygame.image.load("assets/fondo.jpg")
 
 def get_font(size): 
     return pygame.font.Font("assets/font.ttf", size)
 
 def play():
- pygame.init()
- pygame.mixer.init()
- pygame.mixer.music.load("music.mp3")
- pygame.mixer.music.play()
- pygame.mixer.music.set_volume(0.5)
+#  pygame.init()
+#  pygame.mixer.init()
+#  pygame.mixer.music.load("music.mp3")
+#  pygame.mixer.music.play()
+#  pygame.mixer.music.set_volume(0.5)
   
 
     
@@ -103,7 +103,6 @@ def play():
 
  contador = 0
  font = pygame.font.SysFont("Arial", 20)
- eje_y = int(input("Ingrese un numero del 1 al 10 para medir la fuerza con la que lanzará el tejo, siendo 10 la fuerza maxima: "))
 
  while True:
     for event in pygame.event.get():
@@ -114,26 +113,30 @@ def play():
     if event.type == pygame.MOUSEBUTTONDOWN:
             tejo = Tejo()
             tejo.rect.x = x+10
-            tejo.rect.y = 600 -10
-            #     tejo.rect.y = y-50
-            # elif eje_y == 2:
-            #     tejo.rect.y = y-100
-            # elif eje_y == 3:
-            #     tejo.rect.y = y-150
-            # elif eje_y == 4:
-            #     tejo.rect.y = y-200
-            # elif eje_y == 5:
-            #     tejo.rect.y = y-250
-            # elif eje_y == 6:
-            #     tejo.rect.y = y-300
-            # elif eje_y == 7:
-            #     tejo.rect.y = y-350
-            # elif eje_y == 8:
-            #     tejo.rect.y = y-400
-            # elif eje_y == 9:
-            #     tejo.rect.y = y-450
-            # elif eje_y == 10:
-            #     tejo.rect.y = y-500                                                             
+            tejo.rect.y = int(input("Ingrese un numero del 1 al 10 para medir la fuerza con la que lanzará el tejo, siendo 10 la fuerza maxima: "))
+            if tejo.rect.y == 10:
+               tejo.rect.y = random.randrange(50, 99)
+            elif tejo.rect.y == 9:
+                tejo.rect.y = random.randrange(100, 149)
+            elif tejo.rect.y  == 8:
+                tejo.rect.y = random.randrange(150, 199)
+            elif tejo.rect.y  == 7:
+                tejo.rect.y = random.randrange(200, 249)
+            elif tejo.rect.y  == 6:
+                tejo.rect.y = random.randrange(250, 299)
+            elif tejo.rect.y  == 5:
+                tejo.rect.y = random.randrange(300, 350)
+            elif tejo.rect.y  == 4:
+                tejo.rect.y = random.randrange(350, 399)
+            elif tejo.rect.y  == 3:
+                tejo.rect.y = random.randrange(400, 450)
+            elif tejo.rect.y  == 2:
+                tejo.rect.y = random.randrange(450, 499)
+            elif tejo.rect.y  == 1:
+                tejo.rect.y = random.randrange(500, 600)
+            elif tejo.rect.y > 10:
+                print("El numero ingresado no es valido")
+                                                                                
             tejo_lista.add(tejo)
 
                     
@@ -157,7 +160,7 @@ def play():
     tejo_lista.draw(ventana)
     ventana.blit(jugador.image, (cord_x, cord_y))
     
-    clock.tick(100)    
+    clock.tick(600)    
     pygame.display.flip()
     
 def options():
@@ -175,9 +178,9 @@ def options():
                             text_input="ATRÁS", font=get_font(35), base_color="Black", hovering_color="Green")
         TEXTO_1 = Button(image=None, pos=(450, 150),text_input="Al darle a jugar irás a la arena del tejo donde tendrás", font=get_font(13), base_color="Black", hovering_color="Green")
         TEXTO_2 = Button(image=None, pos=(450, 200),text_input="que darle clic a la pantalla para frenar tu mano e", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_3 = Button(image=None, pos=(450, 250),text_input="ingresar un valor entre 1 y 600:", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_4 = Button(image=None, pos=(450, 300),text_input="1 es lanzar el tejo casi saliendo del juego, y 600 al revés, ", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_5 = Button(image=None, pos=(450, 350),text_input="tendrás el tejo a 1 cm de tu mano, tu tarea es atinar", font=get_font(13), base_color="Black", hovering_color="Green")
+        TEXTO_3 = Button(image=None, pos=(450, 250),text_input="ingresar un valor entre 1 y 10 :D", font=get_font(13), base_color="Black", hovering_color="Green")
+        TEXTO_4 = Button(image=None, pos=(450, 300),text_input="1 es la fuerza mínima, y 10 es la fuerza máxima, bien: ", font=get_font(13), base_color="Black", hovering_color="Green")
+        TEXTO_5 = Button(image=None, pos=(450, 350),text_input="tu tarea es atinar", font=get_font(13), base_color="Black", hovering_color="Green")
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(SCREEN)
         TEXTO_1.update(SCREEN)
@@ -203,15 +206,15 @@ def main_menu():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(35).render("TEJO CON PYGAME", True, "#b68f40")
-        MENU_RECT = MENU_TEXT.get_rect(center=(450, 100))
+        MENU_TEXT = get_font(35).render("TEJO CON PYGAME", True, "green")
+        MENU_RECT = MENU_TEXT.get_rect(center=(450, 30))
 
         PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(450, 250), 
-                            text_input="Jugar", font=get_font(35), base_color="#d7fcd4", hovering_color="green")
+                            text_input="Jugar", font=get_font(35), base_color="black", hovering_color="green")
         OPTIONS_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(450, 400), 
-                            text_input="Como jugar", font=get_font(35), base_color="#d7fcd4", hovering_color="green")
+                            text_input="Como jugar", font=get_font(35), base_color="black", hovering_color="green")
         QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(450, 550), 
-                            text_input="Salir", font=get_font(35), base_color="#d7fcd4", hovering_color="red")
+                            text_input="Salir", font=get_font(35), base_color="black", hovering_color="red")
 
         CREDITOS = Button(image=None, pos=(450, 650),text_input="Gloria Gama, Jeison Olivares, Julian xd", font=get_font(13), base_color="white", hovering_color="Green")
 
