@@ -196,7 +196,7 @@ def main_menu():
         QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(450, 550), 
                             text_input="Salir", font=get_font(35), base_color="black", hovering_color="red")
 
-        CREDITOS = Button(image=None, pos=(450, 650),text_input="Gloria Gama, Jeison Olivares, Julian xd", font=get_font(20), base_color="white", hovering_color="Green")
+        CREDITOS = Button(image=None, pos=(450, 650),text_input="Gloria Gama, Jeyson Olivare, Julian", font=get_font(20), base_color="white", hovering_color="Green")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
         
