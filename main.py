@@ -140,7 +140,7 @@ def play():
     contador(ventana, str("JUGADOR 1"), 16, 900 - 750, 10)
     contador(ventana, str("Tu puntaje es: "), 16, 900 - 750, 35)
     contador(ventana, str(score), 15, 900 - 670, 35)
-    clock.tick(600)    
+    clock.tick(1000)    
     pygame.display.flip()
     
 def options():
@@ -149,18 +149,18 @@ def options():
 
         SCREEN.fill("white")
 
-        OPTIONS_TEXT = get_font(15).render("Para jugar sigue las siguientes instrucciones: ", True, "Black")
+        OPTIONS_TEXT = get_font(18).render("Para jugar sigue las siguientes instrucciones: ", True, "Black")
         
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(450, 100))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
         OPTIONS_BACK = Button(image=None, pos=(450, 550), 
                             text_input="ATRAS", font=get_font(35), base_color="Black", hovering_color="red")
-        TEXTO_1 = Button(image=None, pos=(450, 150),text_input="Al darle a jugar iras a la arena del tejo donde tendras", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_2 = Button(image=None, pos=(450, 200),text_input="que darle clic a la pantalla para frenar tu mano e", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_3 = Button(image=None, pos=(450, 250),text_input="ingresar un valor entre 1 y 10 en tu consola", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_4 = Button(image=None, pos=(450, 300),text_input="1 es la fuerza minima, y 10 es la fuerza maxima, bien: ", font=get_font(13), base_color="Black", hovering_color="Green")
-        TEXTO_5 = Button(image=None, pos=(450, 350),text_input="tu tarea es hacer < Bosin > o hacer el maximo puntaje", font=get_font(13), base_color="Black", hovering_color="Green")
+        TEXTO_1 = Button(image=None, pos=(450, 150),text_input="Al darle a jugar iras a la arena del tejo donde tendras", font=get_font(18), base_color="Black", hovering_color="Green")
+        TEXTO_2 = Button(image=None, pos=(450, 200),text_input="que darle clic a la pantalla para frenar tu mano e", font=get_font(18), base_color="Black", hovering_color="Green")
+        TEXTO_3 = Button(image=None, pos=(450, 250),text_input="ingresar un valor entre 1 y 10 en tu consola", font=get_font(18), base_color="Black", hovering_color="Green")
+        TEXTO_4 = Button(image=None, pos=(450, 300),text_input="1 es la fuerza minima, y 10 es la fuerza maxima, bien: ", font=get_font(18), base_color="Black", hovering_color="Green")
+        TEXTO_5 = Button(image=None, pos=(450, 350),text_input="tu tarea es hacer < Bosin > o hacer el maximo puntaje", font=get_font(18), base_color="Black", hovering_color="Green")
         OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
         OPTIONS_BACK.update(SCREEN)
         TEXTO_1.update(SCREEN)
