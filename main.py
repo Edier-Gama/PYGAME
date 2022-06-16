@@ -235,8 +235,10 @@ def play():
         if pygame.sprite.spritecollide(tiro, bosinC, True):
             score += 3
     
-    if score == 7:
-        menu_final()
+    #Trabajo pendiente (sistemas de puntos con bot)
+    
+    # if score == 7:
+    #     menu_final()
             
     # Animacion principal de la mano
     cord_x += speed_x
