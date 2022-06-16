@@ -4,6 +4,7 @@ from botones import Button
 
 pygame.init()
 
+#Creación de la panatlla del menú
 
 SCREEN = pygame.display.set_mode((900, 700))
 pygame.display.set_caption("Menu")
@@ -20,14 +21,18 @@ def play():
  green = 0, 255, 0
  red = 255, 0, 0
  
+
+ #Contador de puntos
+ 
  def contador(surface, text, size, x, y):
    font = pygame.font.Font("assets/font.ttf", size)
    text_surface = font.render(text, True, (255, 255, 255))
    text_rect = text_surface.get_rect()
    text_rect.midtop = (x, y)
    surface.blit(text_surface, text_rect)
-    
-    # CReacion de las clases
+
+
+ #Creacion de las clases 
    
  class Jugador(pygame.sprite.Sprite):
         
@@ -50,13 +55,56 @@ def play():
           pygame.sprite.Sprite.__init__(self)
           self.image = pygame.image.load("assets/mecha.png").convert_alpha()
           self.rect = self.image.get_rect()
-            
+ 
+ class ArenaSuperior(pygame.sprite.Sprite):
+     
+     def __init__(self):
+          pygame.sprite.Sprite.__init__(self)
+          self.image = pygame.image.load("assets/arena_superior.png").convert_alpha()
+          self.rect = self.image.get_rect()
+          
+ class ArenaInferior(pygame.sprite.Sprite):
+     
+     def __init__(self):
+          pygame.sprite.Sprite.__init__(self)
+          self.image = pygame.image.load("assets/arena_inferior.png").convert_alpha()
+          self.rect = self.image.get_rect() 
+                  
+ class ArenaIz(pygame.sprite.Sprite):
+     
+     def __init__(self):
+          pygame.sprite.Sprite.__init__(self)
+          self.image = pygame.image.load("assets/arena_iz.png").convert_alpha()
+          self.rect = self.image.get_rect()
+          
+ class ArenaDe(pygame.sprite.Sprite):
+     
+     def __init__(self):
+          pygame.sprite.Sprite.__init__(self)
+          self.image = pygame.image.load("assets/arena_d.png").convert_alpha()
+          self.rect = self.image.get_rect()
+
+ class Bosin(pygame.sprite.Sprite):
+     
+     def __init__(self):
+          pygame.sprite.Sprite.__init__(self)
+          self.image = pygame.image.load("assets/bocin.png").convert_alpha()
+          self.rect = self.image.get_rect()                                 
                 
- ancho = 800
- alto = 600
+ #Sprites con los que se interactua pasados a listas
+ 
  tejo_lista = pygame.sprite.Group()
  mechaLista = pygame.sprite.Group()
-    
+ arenaS = pygame.sprite.Group()
+ arenaDer = pygame.sprite.Group()
+ arenaIzq = pygame.sprite.Group()
+ arenaIn = pygame.sprite.Group()
+ bosinC = pygame.sprite.Group()
+ 
+ 
+ #Creacion de la pantalla de juego
+ ancho = 800
+ alto = 600   
  ventana = pygame.display.set_mode((ancho, alto))
  clock = pygame.time.Clock()
  pygame.mouse.set_visible(True)
@@ -65,31 +113,64 @@ def play():
     
  jugador = Jugador()
     
-
+ # Posicionamiento de las mechas y demas areas
  mecha = Mechas()
  mecha.rect.x =  420
  mecha.rect.y =  240
  mechaLista.add(mecha)
   
  mecha = Mechas()
- mecha.rect.x =  380
+ mecha.rect.x =  375
  mecha.rect.y =  240
  mechaLista.add(mecha)
+ 
+ arena_s = ArenaSuperior()
+ arena_s.rect.x =  380
+ arena_s.rect.y =  210
+ arenaS.add(arena_s)
+ 
+ arena_iz = ArenaIz()
+ arena_iz.rect.x =  340
+ arena_iz.rect.y =  210
+ arenaIzq.add(arena_iz)
+ 
+ arena_de = ArenaDe()
+ arena_de.rect.x =  440
+ arena_de.rect.y =  210
+ arenaDer.add(arena_de)
+ 
+ arena_in = ArenaInferior()
+ arena_in.rect.x =  350
+ arena_in.rect.y =  270
+ arenaIn.add(arena_in)
+ 
+ bosin = Bosin()
+ bosin.rect.x =  390
+ bosin.rect.y = 240
+ bosinC.add(bosin)
   
-
+ #Posicionamiento de la mano del jugador
  cord_x = 0
  cord_y = 480
  speed_x = 3
  speed_y = 3
-
+ 
+ #Puntos iniciados en 0
  score = 0
  font = pygame.font.SysFont("Arial", 20)
-
+ 
+ #Bucle princcipal del juego
+ 
  while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
             
+     
+    # Creacion de la mecanica de movimiento del tejo:
+    
+    #Depende de la fuerza irá a un eje Y estiamdo entre los
+    # valores que se le asignen
             
     if event.type == pygame.MOUSEBUTTONDOWN:
             tejo = Tejo()
@@ -119,22 +200,60 @@ def play():
                 print("El numero ingresado no es valido")
                                                                                 
             tejo_lista.add(tejo)
-
-                    
+    
+    # Coliciones con los sprites, segun el area de la arena en que de el tej
+    # suma cierta cantidad de puntos al jugador
+                   
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, mechaLista, True):
+            score += 2
+            
+    
+    tejo_lista.update()
+    for tiro in tejo_lista:
+        if pygame.sprite.spritecollide(tiro, arenaS, True):
             score += 1
-            print(score)
-           
+    
+    tejo_lista.update()
+    for tiro in tejo_lista:
+        if pygame.sprite.spritecollide(tiro, arenaIn, True):
+            score += 1 
+    
+    tejo_lista.update()
+    for tiro in tejo_lista:
+        if pygame.sprite.spritecollide(tiro, arenaDer, True):
+            score += 1              
+    
+    tejo_lista.update()
+    for tiro in tejo_lista:
+        if pygame.sprite.spritecollide(tiro, arenaIzq, True):
+            score += 1
+            
+    tejo_lista.update()
+    for tiro in tejo_lista:
+        if pygame.sprite.spritecollide(tiro, bosinC, True):
+            score += 3
+    
+    if score == 7:
+        menu_final()
+            
+    # Animacion principal de la mano
     cord_x += speed_x
     if cord_x > 770 or cord_x < 0:
         speed_x *= -1
+    
+    # Dibujando todo en la pantalla de juego
             
     ventana.blit(fondo, [0,0])
     x,y = cord_x, cord_y
     mechaLista.draw(ventana)
     tejo_lista.draw(ventana)
+    arenaS.draw(ventana)
+    arenaIn.draw(ventana)
+    arenaDer.draw(ventana)
+    arenaIzq.draw(ventana)
+    bosinC.draw(ventana)
     ventana.blit(jugador.image, (cord_x, cord_y))
     pygame.draw.rect(ventana, (0, 0, 0), (0, 0, 330, 70))
     contador(ventana, str("JUGADOR 1"), 16, 900 - 750, 10)
@@ -142,6 +261,8 @@ def play():
     contador(ventana, str(score), 15, 900 - 670, 35)
     clock.tick(1000)    
     pygame.display.flip()
+    
+    #Inicio del menu de instrucciones
     
 def options():
     while True:
@@ -154,8 +275,7 @@ def options():
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(450, 100))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
-        OPTIONS_BACK = Button(image=None, pos=(450, 550), 
-                            text_input="ATRAS", font=get_font(35), base_color="Black", hovering_color="red")
+        OPTIONS_BACK = Button(image=None, pos=(450, 550),text_input="ATRAS", font=get_font(35), base_color="Black", hovering_color="red")
         TEXTO_1 = Button(image=None, pos=(450, 150),text_input="Al darle a jugar iras a la arena del tejo donde tendras", font=get_font(18), base_color="Black", hovering_color="Green")
         TEXTO_2 = Button(image=None, pos=(450, 200),text_input="que darle clic a la pantalla para frenar tu mano e", font=get_font(18), base_color="Black", hovering_color="Green")
         TEXTO_3 = Button(image=None, pos=(450, 250),text_input="ingresar un valor entre 1 y 10 en tu consola", font=get_font(18), base_color="Black", hovering_color="Green")
@@ -177,6 +297,44 @@ def options():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
+
+        pygame.display.update()
+        
+    #Menu principal del juego    
+
+def menu_final():
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        MENU_TEXT = get_font(35).render("Has ganado, felicidades :D", True, "black")
+        MENU_RECT = MENU_TEXT.get_rect(center=(450, 30))
+
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(450, 250), 
+                            text_input="Jugar de nuevo", font=get_font(35), base_color="black", hovering_color="green")
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(450, 550), 
+                            text_input="Salir", font=get_font(35), base_color="black", hovering_color="red")
+
+        CREDITOS = Button(image=None, pos=(450, 650),text_input="Gloria Gama, Jeyson Olivare, Julian", font=get_font(20), base_color="white", hovering_color="Green")
+
+        SCREEN.blit(MENU_TEXT, MENU_RECT)
+        
+
+        for button in [PLAY_BUTTON, QUIT_BUTTON, CREDITOS]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(SCREEN)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    play()
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pygame.quit()
+                    sys.exit()
 
         pygame.display.update()
 
