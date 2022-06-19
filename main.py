@@ -166,11 +166,13 @@ def play():
  #Puntos iniciados en 0
  score = 0
  score_bot = 0
+ vidas = 10
  font = pygame.font.SysFont("Arial", 20)
  
  #Bucle princcipal del juego
  
  while True:
+    clock.tick(600) 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -182,6 +184,7 @@ def play():
     # valores que se le asignen
             
     if event.type == pygame.MOUSEBUTTONDOWN:
+            vidas - 2
             tejo = Tejo()
             tejo.rect.x = x+10
             tejo.rect.y = int(input("Ingrese un numero del 1 al 10 para medir la fuerza con la que lanzará el tejo, siendo 10 la fuerza maxima: "))
@@ -217,41 +220,47 @@ def play():
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, mechaLista, True):
             score += 2
-            score_bot += random.randint(1,2)
-            
+            score_bot += random.randint(1,3)
+
     
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaS, True):
             score += 1
-            score_bot += random.randint(1,2)
-
-    
+            score_bot += random.randint(1,3)
+            
+            
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaIn, True):
             score += 1 
-            score_bot += random.randint(1,2)
+            score_bot += random.randint(1,3)
+            
 
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaDer, True):
             score += 1              
-            score_bot += random.randint(1,2)
+            score_bot += random.randint(1,3)
+            
             
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaIzq, True):
             score += 1
-            score_bot += random.randint(1,2)
+            score_bot += random.randint(1,3)
+            
             
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, bosinC, True):
             score += 3
-            score_bot += random.randint(1,3)
+            score_bot += random.randint(1,5)
+            vidas - 2
 
     
+    if score_bot > score and vidas < 0:
+        menu_final()
             
     # Animacion principal de la mano
     cord_x += speed_x
@@ -271,12 +280,13 @@ def play():
     bosinC.draw(ventana)
     ventana.blit(jugador.image, (cord_x, cord_y))
     pygame.draw.rect(ventana, (0, 0, 0), (0, 0, 330, 70))
-    pygame.draw.rect(ventana, (0, 0, 0), (430, 0, 330, 70))
-    bot(ventana, str("Jugador 100% real no fake"), 16, 900 - 350, 10)
+    pygame.draw.rect(ventana, (0, 0, 0), (470, 0, 330, 70))
+    bot(ventana, str("Jugador 100% real no fake"), 16, 900 - 270, 10)
+    bot(ventana, str("Tu puntaje es: "), 16, 900 - 270, 35)
+    bot(ventana, str(score), 15, 900 - 190, 35)
     contador(ventana, str("JUGADOR 1"), 16, 900 - 750, 10)
     contador(ventana, str("Tu puntaje es: "), 16, 900 - 750, 35)
-    contador(ventana, str(score), 15, 900 - 670, 35)
-    clock.tick(100)    
+    contador(ventana, str(score), 15, 900 - 670, 35)   
     pygame.display.flip()
     
     #Inicio del menu de instrucciones
