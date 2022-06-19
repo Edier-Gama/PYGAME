@@ -31,6 +31,14 @@ def play():
    text_rect.midtop = (x, y)
    surface.blit(text_surface, text_rect)
 
+ #Contador de puntos del bot
+ 
+ def bot(surface, text, size, x, y):
+   font = pygame.font.Font("assets/font.ttf", size)
+   text_surface = font.render(text, True, (255, 255, 255))
+   text_rect = text_surface.get_rect()
+   text_rect.midtop = (x, y)
+   surface.blit(text_surface, text_rect)
 
  #Creacion de las clases 
    
@@ -157,6 +165,7 @@ def play():
  
  #Puntos iniciados en 0
  score = 0
+ score_bot = 0
  font = pygame.font.SysFont("Arial", 20)
  
  #Bucle princcipal del juego
@@ -208,37 +217,41 @@ def play():
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, mechaLista, True):
             score += 2
+            score_bot += random.randint(1,2)
             
     
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaS, True):
             score += 1
+            score_bot += random.randint(1,2)
+
     
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaIn, True):
             score += 1 
-    
+            score_bot += random.randint(1,2)
+
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaDer, True):
             score += 1              
-    
+            score_bot += random.randint(1,2)
+            
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaIzq, True):
             score += 1
+            score_bot += random.randint(1,2)
             
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, bosinC, True):
             score += 3
+            score_bot += random.randint(1,3)
+
     
-    #Trabajo pendiente (sistemas de puntos con bot)
-    
-    # if score == 7:
-    #     menu_final()
             
     # Animacion principal de la mano
     cord_x += speed_x
@@ -258,10 +271,12 @@ def play():
     bosinC.draw(ventana)
     ventana.blit(jugador.image, (cord_x, cord_y))
     pygame.draw.rect(ventana, (0, 0, 0), (0, 0, 330, 70))
+    pygame.draw.rect(ventana, (0, 0, 0), (430, 0, 330, 70))
+    bot(ventana, str("Jugador 100% real no fake"), 16, 900 - 350, 10)
     contador(ventana, str("JUGADOR 1"), 16, 900 - 750, 10)
     contador(ventana, str("Tu puntaje es: "), 16, 900 - 750, 35)
     contador(ventana, str(score), 15, 900 - 670, 35)
-    clock.tick(1000)    
+    clock.tick(100)    
     pygame.display.flip()
     
     #Inicio del menu de instrucciones
