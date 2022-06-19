@@ -114,7 +114,6 @@ def play():
  ancho = 800
  alto = 600   
  ventana = pygame.display.set_mode((ancho, alto))
- clock = pygame.time.Clock()
  pygame.mouse.set_visible(True)
  pygame.display.set_caption("Tejo")   
  fondo = pygame.image.load("assets/imagen_principal.jpg").convert()    
@@ -171,8 +170,7 @@ def play():
  
  #Bucle princcipal del juego
  
- while True:
-    clock.tick(600) 
+ while True: 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -220,42 +218,42 @@ def play():
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, mechaLista, True):
             score += 2
-            score_bot += random.randint(1,3)
+            score_bot += random.randint(1,2)
 
     
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaS, True):
             score += 1
-            score_bot += random.randint(1,3)
+            score_bot += random.randint(1,2)
             
             
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaIn, True):
             score += 1 
-            score_bot += random.randint(1,3)
+            score_bot += random.randint(1,2)
             
 
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaDer, True):
             score += 1              
-            score_bot += random.randint(1,3)
+            score_bot += random.randint(1,2)
             
             
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, arenaIzq, True):
             score += 1
-            score_bot += random.randint(1,3)
+            score_bot += random.randint(1,2)
             
             
     tejo_lista.update()
     for tiro in tejo_lista:
         if pygame.sprite.spritecollide(tiro, bosinC, True):
             score += 3
-            score_bot += random.randint(1,5)
+            score_bot += random.randint(1,3)
             vidas - 2
 
     
@@ -283,7 +281,7 @@ def play():
     pygame.draw.rect(ventana, (0, 0, 0), (470, 0, 330, 70))
     bot(ventana, str("Jugador 100% real no fake"), 16, 900 - 270, 10)
     bot(ventana, str("Tu puntaje es: "), 16, 900 - 270, 35)
-    bot(ventana, str(score), 15, 900 - 190, 35)
+    bot(ventana, str(score_bot), 15, 900 - 190, 35)
     contador(ventana, str("JUGADOR 1"), 16, 900 - 750, 10)
     contador(ventana, str("Tu puntaje es: "), 16, 900 - 750, 35)
     contador(ventana, str(score), 15, 900 - 670, 35)   
