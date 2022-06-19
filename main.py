@@ -20,9 +20,17 @@ def play():
  white = 255, 255, 255
  green = 0, 255, 0
  red = 255, 0, 0
+ gray = 128, 128, 128
  
 
  #Contador de puntos
+ 
+ def lives(surface, text, size, x, y):
+   font = pygame.font.Font("assets/font.ttf", size)
+   text_surface = font.render(text, True, (255, 255, 255))
+   text_rect = text_surface.get_rect()
+   text_rect.midtop = (x, y)
+   surface.blit(text_surface, text_rect)
  
  def contador(surface, text, size, x, y):
    font = pygame.font.Font("assets/font.ttf", size)
@@ -161,7 +169,7 @@ def play():
  cord_y = 480
  speed_x = 3
  speed_y = 3
- 
+ clock = pygame.time.Clock()
  #Puntos iniciados en 0
  score = 0
  score_bot = 0
@@ -170,7 +178,8 @@ def play():
  
  #Bucle princcipal del juego
  
- while True: 
+ while True:
+    clock.tick(100)  
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -182,7 +191,7 @@ def play():
     # valores que se le asignen
             
     if event.type == pygame.MOUSEBUTTONDOWN:
-            vidas - 2
+            vidas -= 2
             tejo = Tejo()
             tejo.rect.x = x+10
             tejo.rect.y = int(input("Ingrese un numero del 1 al 10 para medir la fuerza con la que lanzará el tejo, siendo 10 la fuerza maxima: "))
@@ -257,9 +266,10 @@ def play():
             vidas - 2
 
     
-    if score_bot > score and vidas < 0:
+    if score_bot > score and vidas <= 0:
         menu_final()
-            
+    if score > score_bot and vidas <= 0:
+        menu_final()        
     # Animacion principal de la mano
     cord_x += speed_x
     if cord_x > 770 or cord_x < 0:
@@ -279,9 +289,12 @@ def play():
     ventana.blit(jugador.image, (cord_x, cord_y))
     pygame.draw.rect(ventana, (0, 0, 0), (0, 0, 330, 70))
     pygame.draw.rect(ventana, (0, 0, 0), (470, 0, 330, 70))
+    pygame.draw.rect(ventana, (gray), (330, 0, 140, 70))
     bot(ventana, str("Jugador 100% real no fake"), 16, 900 - 270, 10)
     bot(ventana, str("Tu puntaje es: "), 16, 900 - 270, 35)
     bot(ventana, str(score_bot), 15, 900 - 190, 35)
+    lives(ventana, str("VIDAS"), 25, 900 - 500, 10)
+    lives(ventana, str(vidas), 19, 900 - 500, 40) 
     contador(ventana, str("JUGADOR 1"), 16, 900 - 750, 10)
     contador(ventana, str("Tu puntaje es: "), 16, 900 - 750, 35)
     contador(ventana, str(score), 15, 900 - 670, 35)   
@@ -333,15 +346,15 @@ def menu_final():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(35).render("Has ganado, felicidades :D", True, "black")
-        MENU_RECT = MENU_TEXT.get_rect(center=(450, 30))
+        MENU_TEXT = get_font(35).render(":( Has perdido", True, "black")
+        MENU_RECT = MENU_TEXT.get_rect(center=(400, 30))
 
-        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(450, 250), 
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
                             text_input="Jugar de nuevo", font=get_font(35), base_color="black", hovering_color="green")
-        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(450, 550), 
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 350), 
                             text_input="Salir", font=get_font(35), base_color="black", hovering_color="red")
 
-        CREDITOS = Button(image=None, pos=(450, 650),text_input="Gloria Gama, Jeyson Olivare, Julian", font=get_font(20), base_color="white", hovering_color="Green")
+        CREDITOS = Button(image=None, pos=(400, 650),text_input="Gloria Gama, Jeyson Olivare, Julian", font=get_font(20), base_color="white", hovering_color="Green")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
         
