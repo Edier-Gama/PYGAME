@@ -191,7 +191,7 @@ def play():
     # valores que se le asignen
             
     if event.type == pygame.MOUSEBUTTONDOWN:
-            vidas -= 2
+            vidas -= 1
             tejo = Tejo()
             tejo.rect.x = x+10
             tejo.rect.y = int(input("Ingrese un numero del 1 al 10 para medir la fuerza con la que lanzará el tejo, siendo 10 la fuerza maxima: "))
@@ -269,7 +269,10 @@ def play():
     if score_bot > score and vidas <= 0:
         menu_final()
     if score > score_bot and vidas <= 0:
-        menu_final()        
+        menu_final_ganador()
+    if score == score_bot and vidas <= 0:
+        menu_final_empate()    
+                
     # Animacion principal de la mano
     cord_x += speed_x
     if cord_x > 770 or cord_x < 0:
@@ -346,11 +349,84 @@ def menu_final():
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(35).render(":( Has perdido", True, "black")
+        MENU_TEXT = get_font(35).render("HAS PERDIDO:( TUS PUNTOS NO DAN", True, "black")
         MENU_RECT = MENU_TEXT.get_rect(center=(400, 30))
 
         PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
-                            text_input="Jugar de nuevo", font=get_font(35), base_color="black", hovering_color="green")
+                            text_input="JUGAR DE NUEVO", font=get_font(35), base_color="black", hovering_color="green")
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 350), 
+                            text_input="SALIR", font=get_font(35), base_color="black", hovering_color="red")
+
+        CREDITOS = Button(image=None, pos=(400, 650),text_input="Gloria Gama, Jeyson Olivare, Julian", font=get_font(20), base_color="white", hovering_color="Green")
+
+        SCREEN.blit(MENU_TEXT, MENU_RECT)
+        
+
+        for button in [PLAY_BUTTON, QUIT_BUTTON, CREDITOS]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(SCREEN)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    play()
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pygame.quit()
+                    sys.exit()
+
+        pygame.display.update()
+        
+def menu_final_ganador():
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        MENU_TEXT = get_font(35).render("GANASTE :D TU PUNTAJE FUE GANADOR", True, "black")
+        MENU_RECT = MENU_TEXT.get_rect(center=(400, 30))
+
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
+                            text_input="JUGAR DE NUEVO", font=get_font(35), base_color="black", hovering_color="green")
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 350), 
+                            text_input="SALIR", font=get_font(35), base_color="black", hovering_color="red")
+
+        CREDITOS = Button(image=None, pos=(400, 650),text_input="Gloria Gama, Jeyson Olivare, Julian", font=get_font(20), base_color="white", hovering_color="Green")
+
+        SCREEN.blit(MENU_TEXT, MENU_RECT)
+        
+
+        for button in [PLAY_BUTTON, QUIT_BUTTON, CREDITOS]:
+            button.changeColor(MENU_MOUSE_POS)
+            button.update(SCREEN)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    play()
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    pygame.quit()
+                    sys.exit()
+
+        pygame.display.update()        
+
+
+def menu_final_empate():
+    while True:
+        SCREEN.blit(BG, (0, 0))
+
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+        MENU_TEXT = get_font(35).render("ESTO HA SIDO UN EMPATE :0", True, "black")
+        MENU_RECT = MENU_TEXT.get_rect(center=(400, 30))
+
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250), 
+                            text_input="JUGAR DE NUEVO", font=get_font(35), base_color="black", hovering_color="green")
         QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 350), 
                             text_input="Salir", font=get_font(35), base_color="black", hovering_color="red")
 
@@ -374,7 +450,7 @@ def menu_final():
                     pygame.quit()
                     sys.exit()
 
-        pygame.display.update()
+        pygame.display.update()  
 
 def main_menu():
     while True:
